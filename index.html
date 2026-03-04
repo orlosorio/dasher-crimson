@@ -137,14 +137,33 @@ body {
 
 /* ===== HERO ===== */
 .hero {
-  background: var(--crimson-primary);
-  padding: 128px 0 0;
   position: relative;
   overflow: hidden;
+  min-height: 600px;
 }
 
-/* Subtle background pattern — darker grid lines inspired by the card */
-.hero::before {
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 600px;
+}
+
+/* Left Column: Text on crimson */
+.hero-content {
+  background: var(--crimson-primary);
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 128px 56px 80px max(32px, calc((100vw - 1200px) / 2 + 32px));
+  opacity: 0;
+  transform: translateY(24px);
+  animation: fadeUp 0.7s 0.15s forwards;
+}
+
+/* Subtle grid pattern on left side */
+.hero-content::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -156,21 +175,9 @@ body {
   opacity: 0.4;
 }
 
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  gap: 40px;
-  align-items: end;
-  min-height: 480px;
-}
-
-.hero-content {
+.hero-content > * {
   position: relative;
-  z-index: 2;
-  padding-bottom: 80px;
-  opacity: 0;
-  transform: translateY(24px);
-  animation: fadeUp 0.7s 0.15s forwards;
+  z-index: 1;
 }
 
 .hero h1 {
@@ -228,54 +235,48 @@ body {
   transform: scale(0.98);
 }
 
-/* ===== Hero Right Column — Complex Visual Stack ===== */
+/* ===== Hero Right Column — Full-bleed Photo ===== */
 .hero-visual {
   position: relative;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  min-height: 480px;
+  overflow: hidden;
   opacity: 0;
   transform: translateY(24px);
   animation: fadeUp 0.7s 0.3s forwards;
 }
 
-/* Background photo area — the Dasher lifestyle photo */
+/* Full-bleed lifestyle photo */
 .hero-photo {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, rgba(111,15,15,0.4) 0%, rgba(111,15,15,0.1) 50%, rgba(111,15,15,0.3) 100%);
-  border-radius: 4px 4px 0 0;
-  overflow: hidden;
-}
-
-/* Simulated lifestyle photo with warm overlay */
-.hero-photo::before {
-  content: '';
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse at 60% 40%, rgba(200,150,100,0.15) 0%, transparent 60%),
-    linear-gradient(180deg, rgba(111,15,15,0) 60%, rgba(111,15,15,0.7) 100%);
+    linear-gradient(to right, var(--crimson-primary) 0%, rgba(111,15,15,0) 15%),
+    url('https://images.unsplash.com/photo-1594750018638-7f97ef53fb2d?w=900&h=1100&fit=crop&crop=top') center/cover no-repeat;
+  z-index: 1;
 }
 
-/* Transparent card overlay frame (Layer 3 from PRD) */
+/* Fallback gradient if image doesn't load */
+.hero-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(111,15,15,0) 50%, rgba(74,8,8,0.6) 100%);
+  z-index: 1;
+}
+
+/* Transparent card overlay frame */
 .hero-frame {
   position: absolute;
-  top: 24px;
-  right: 24px;
-  width: 280px;
-  height: 180px;
+  top: 140px;
+  right: 40px;
+  width: 300px;
+  height: 190px;
   border: 1.5px solid rgba(255, 255, 255, 0.3);
   border-radius: 14px;
-  padding: 20px;
+  padding: 22px;
   z-index: 3;
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
-  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  background: rgba(255,255,255,0.05);
 }
 
 .hero-frame-dd {
@@ -325,20 +326,21 @@ body {
   border-radius: 2px;
 }
 
-/* Fanned card stack (Layer 2 from PRD) */
+/* Fanned card stack */
 .hero-cards-stack {
-  position: relative;
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 4;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  padding-bottom: 0;
+  width: 320px;
+  height: 200px;
 }
 
-/* Base card mixin */
+/* Base card */
 .c-card {
-  width: 260px;
-  height: 164px;
+  width: 240px;
+  height: 152px;
   background: linear-gradient(145deg, #c4271a 0%, #8a1a12 35%, #6F0F0F 70%, #4A0808 100%);
   border-radius: 14px;
   position: absolute;
@@ -367,7 +369,7 @@ body {
 }
 
 .c-card-inner {
-  padding: 18px 20px 16px;
+  padding: 16px 18px 14px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -389,12 +391,12 @@ body {
 }
 
 .c-card-dd svg {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
 }
 
 .c-card-dd span {
-  font-size: 9px;
+  font-size: 8px;
   font-weight: 700;
   color: var(--doordash-red);
   letter-spacing: 0.08em;
@@ -402,7 +404,7 @@ body {
 }
 
 .c-card-brand {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--doordash-red);
   letter-spacing: 0.03em;
@@ -410,11 +412,11 @@ body {
 }
 
 .c-card-chip {
-  width: 32px;
-  height: 24px;
+  width: 30px;
+  height: 22px;
   background: linear-gradient(135deg, #C9A84C, #B8943C, #D4B85C);
   border-radius: 5px;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .c-card-bottom {
@@ -424,7 +426,7 @@ body {
 }
 
 .c-card-visa {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: rgba(255,255,255,0.85);
   font-style: italic;
@@ -433,7 +435,7 @@ body {
 }
 
 .c-card-debit-text {
-  font-size: 8px;
+  font-size: 7px;
   font-weight: 500;
   color: rgba(255,255,255,0.5);
   letter-spacing: 0.08em;
@@ -444,37 +446,37 @@ body {
 
 /* Card 1 — back card, more rotated */
 .c-card-1 {
-  bottom: 20px;
+  bottom: 30px;
   left: 50%;
-  transform: translateX(-70%) rotate(-12deg);
+  transform: translateX(-75%) rotate(-14deg);
   z-index: 1;
-  opacity: 0.85;
+  opacity: 0.8;
 }
 
 /* Card 2 — middle card */
 .c-card-2 {
-  bottom: 10px;
+  bottom: 16px;
   left: 50%;
-  transform: translateX(-55%) rotate(-4deg);
+  transform: translateX(-55%) rotate(-5deg);
   z-index: 2;
-  opacity: 0.95;
+  opacity: 0.92;
 }
 
 /* Card 3 — front card, most visible */
 .c-card-3 {
   bottom: 0;
   left: 50%;
-  transform: translateX(-40%) rotate(4deg);
+  transform: translateX(-35%) rotate(5deg);
   z-index: 3;
 }
 
-/* DoorDash D logo badge on the red bag area */
+/* DoorDash D logo badge */
 .hero-dd-badge {
   position: absolute;
-  bottom: 36px;
-  right: 24px;
-  width: 56px;
-  height: 56px;
+  top: 100px;
+  left: 24px;
+  width: 52px;
+  height: 52px;
   background: var(--doordash-red);
   border-radius: 50%;
   display: flex;
@@ -485,8 +487,8 @@ body {
 }
 
 .hero-dd-badge svg {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
 }
 
 @keyframes fadeUp {
@@ -946,31 +948,33 @@ body {
 @media (max-width: 900px) {
   .hero-grid {
     grid-template-columns: 1fr;
-    gap: 0;
     min-height: auto;
   }
 
-  .hero-content { padding-bottom: 40px; }
-
-  .hero-visual {
-    min-height: 360px;
-    justify-content: center;
+  .hero-content {
+    padding: 120px 32px 48px;
   }
 
+  .hero-visual {
+    min-height: 400px;
+  }
+
+  .hero-frame { width: 220px; height: 140px; padding: 16px; top: 20px; right: 20px; }
+  .hero-frame-name { font-size: 18px; }
+
+  .hero-cards-stack { width: 280px; height: 180px; bottom: 20px; }
   .c-card { width: 200px; height: 126px; }
   .c-card-brand { font-size: 14px; }
   .c-card-visa { font-size: 16px; }
-  .c-card-chip { width: 26px; height: 18px; margin-top: 6px; }
+  .c-card-chip { width: 24px; height: 18px; margin-top: 6px; }
   .c-card-dd span { font-size: 7px; }
   .c-card-dd svg { width: 12px; height: 12px; }
   .c-card-inner { padding: 12px 14px; }
-  .c-card-1 { transform: translateX(-65%) rotate(-12deg); }
-  .c-card-2 { transform: translateX(-50%) rotate(-4deg); }
-  .c-card-3 { transform: translateX(-35%) rotate(4deg); }
+  .c-card-1 { transform: translateX(-70%) rotate(-12deg); }
+  .c-card-2 { transform: translateX(-52%) rotate(-4deg); }
+  .c-card-3 { transform: translateX(-32%) rotate(4deg); }
 
-  .hero-frame { width: 200px; height: 130px; padding: 14px; top: 12px; right: 12px; }
-  .hero-frame-name { font-size: 16px; }
-  .hero-dd-badge { width: 44px; height: 44px; bottom: 24px; right: 12px; }
+  .hero-dd-badge { width: 44px; height: 44px; top: 60px; left: 16px; }
   .hero-dd-badge svg { width: 24px; height: 24px; }
 
   .highlights-grid {
@@ -1008,8 +1012,11 @@ body {
 
 @media (max-width: 600px) {
   .container { padding: 0 20px; }
-  .hero { padding: 100px 0 0; }
+  .hero-content { padding: 100px 20px 40px; }
+  .hero-visual { min-height: 340px; }
   .hero-frame { display: none; }
+  .hero-cards-stack { width: 240px; height: 160px; bottom: 16px; }
+  .c-card { width: 170px; height: 108px; }
 
   .perks-grid { grid-template-columns: 1fr; }
 
@@ -1055,97 +1062,95 @@ body {
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- HERO — Full-bleed layout -->
 <section class="hero" id="hero">
-  <div class="container">
-    <div class="hero-grid">
-      <!-- Left Column: Content Stack -->
-      <div class="hero-content">
-        <h1>Cash after<br>every dash</h1>
-        <p class="hero-body">No more awaiting all week or paying extra fees — get paid instantly (1) after every dash, earn cash back (2) on your purchases, and manage your money securely and easily all within the Dasher app.</p>
-        <p class="hero-callout">It's the account that works for you.</p>
-        <a href="#steps" class="hero-cta">Apply now</a>
+  <div class="hero-grid">
+    <!-- Left Column: Content on crimson -->
+    <div class="hero-content">
+      <h1>Cash after<br>every dash</h1>
+      <p class="hero-body">No more awaiting all week or paying extra fees — get paid instantly after every dash, earn cash back on your purchases, and manage your money securely and easily all within the Dasher app.</p>
+      <p class="hero-callout">It's the account that works for you.</p>
+      <a href="#steps" class="hero-cta">Apply now</a>
+    </div>
+
+    <!-- Right Column: Full-bleed photo with overlays -->
+    <div class="hero-visual">
+      <!-- Full-bleed lifestyle photo -->
+      <div class="hero-photo"></div>
+
+      <!-- DoorDash D badge -->
+      <div class="hero-dd-badge">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M27.2 13.4c-1.4-4.1-5.3-7-9.8-7H7.6c-.9 0-1.6.7-1.6 1.6v16c0 .9.7 1.6 1.6 1.6h2.9c.9 0 1.6-.7 1.6-1.6V11.9h5.3c2.5 0 4.7 1.6 5.5 3.9.5 1.5.3 3.2-.6 4.5-.9 1.4-2.3 2.2-3.9 2.3h-1.6c-.9 0-1.6.7-1.6 1.6 0 .9.7 1.6 1.6 1.6h1.7c2.8-.1 5.4-1.6 6.9-4 1.6-2.4 1.9-5.3.8-8.4z" fill="white"/></svg>
       </div>
 
-      <!-- Right Column: Complex Visual Stack -->
-      <div class="hero-visual">
-        <!-- Layer 1: Background photo area -->
-        <div class="hero-photo"></div>
-
-        <!-- Layer 3: Transparent card overlay frame -->
-        <div class="hero-frame">
-          <div class="hero-frame-dd">
-            <svg viewBox="0 0 32 32" fill="none"><path d="M27.2 13.4c-1.4-4.1-5.3-7-9.8-7H7.6c-.9 0-1.6.7-1.6 1.6v16c0 .9.7 1.6 1.6 1.6h2.9c.9 0 1.6-.7 1.6-1.6V11.9h5.3c2.5 0 4.7 1.6 5.5 3.9.5 1.5.3 3.2-.6 4.5-.9 1.4-2.3 2.2-3.9 2.3h-1.6c-.9 0-1.6.7-1.6 1.6 0 .9.7 1.6 1.6 1.6h1.7c2.8-.1 5.4-1.6 6.9-4 1.6-2.4 1.9-5.3.8-8.4z" fill="rgba(255,255,255,0.7)"/></svg>
-            <span>DoorDash</span>
-          </div>
-          <div class="hero-frame-name">CRIMSON</div>
-          <div class="hero-frame-chip"></div>
+      <!-- Transparent card overlay frame -->
+      <div class="hero-frame">
+        <div class="hero-frame-dd">
+          <svg viewBox="0 0 32 32" fill="none"><path d="M27.2 13.4c-1.4-4.1-5.3-7-9.8-7H7.6c-.9 0-1.6.7-1.6 1.6v16c0 .9.7 1.6 1.6 1.6h2.9c.9 0 1.6-.7 1.6-1.6V11.9h5.3c2.5 0 4.7 1.6 5.5 3.9.5 1.5.3 3.2-.6 4.5-.9 1.4-2.3 2.2-3.9 2.3h-1.6c-.9 0-1.6.7-1.6 1.6 0 .9.7 1.6 1.6 1.6h1.7c2.8-.1 5.4-1.6 6.9-4 1.6-2.4 1.9-5.3.8-8.4z" fill="rgba(255,255,255,0.7)"/></svg>
+          <span>DoorDash</span>
         </div>
+        <div class="hero-frame-name">CRIMSON</div>
+        <div class="hero-frame-chip"></div>
+      </div>
 
-        <!-- Layer 2: Fanned card stack -->
-        <div class="hero-cards-stack">
-          <!-- Card 1 — back -->
-          <div class="c-card c-card-1">
-            <div class="c-card-inner">
-              <div class="c-card-top">
-                <div class="c-card-dd">
-                  <svg viewBox="0 0 32 32" fill="none"><path d="M27.2 13.4c-1.4-4.1-5.3-7-9.8-7H7.6c-.9 0-1.6.7-1.6 1.6v16c0 .9.7 1.6 1.6 1.6h2.9c.9 0 1.6-.7 1.6-1.6V11.9h5.3c2.5 0 4.7 1.6 5.5 3.9.5 1.5.3 3.2-.6 4.5-.9 1.4-2.3 2.2-3.9 2.3h-1.6c-.9 0-1.6.7-1.6 1.6 0 .9.7 1.6 1.6 1.6h1.7c2.8-.1 5.4-1.6 6.9-4 1.6-2.4 1.9-5.3.8-8.4z" fill="#ED3325"/></svg>
-                  <span>DoorDash</span>
-                </div>
-                <div class="c-card-brand">CRIMSON</div>
-                <div class="c-card-chip"></div>
+      <!-- Fanned card stack -->
+      <div class="hero-cards-stack">
+        <!-- Card 1 — back -->
+        <div class="c-card c-card-1">
+          <div class="c-card-inner">
+            <div class="c-card-top">
+              <div class="c-card-dd">
+                <svg viewBox="0 0 32 32" fill="none"><path d="M27.2 13.4c-1.4-4.1-5.3-7-9.8-7H7.6c-.9 0-1.6.7-1.6 1.6v16c0 .9.7 1.6 1.6 1.6h2.9c.9 0 1.6-.7 1.6-1.6V11.9h5.3c2.5 0 4.7 1.6 5.5 3.9.5 1.5.3 3.2-.6 4.5-.9 1.4-2.3 2.2-3.9 2.3h-1.6c-.9 0-1.6.7-1.6 1.6 0 .9.7 1.6 1.6 1.6h1.7c2.8-.1 5.4-1.6 6.9-4 1.6-2.4 1.9-5.3.8-8.4z" fill="#ED3325"/></svg>
+                <span>DoorDash</span>
               </div>
-              <div class="c-card-bottom">
-                <div>
-                  <div class="c-card-debit-text">Debit</div>
-                  <div class="c-card-visa">VISA</div>
-                </div>
-              </div>
+              <div class="c-card-brand">CRIMSON</div>
+              <div class="c-card-chip"></div>
             </div>
-          </div>
-          <!-- Card 2 — middle -->
-          <div class="c-card c-card-2">
-            <div class="c-card-inner">
-              <div class="c-card-top">
-                <div class="c-card-dd">
-                  <svg viewBox="0 0 32 32" fill="none"><path d="M27.2 13.4c-1.4-4.1-5.3-7-9.8-7H7.6c-.9 0-1.6.7-1.6 1.6v16c0 .9.7 1.6 1.6 1.6h2.9c.9 0 1.6-.7 1.6-1.6V11.9h5.3c2.5 0 4.7 1.6 5.5 3.9.5 1.5.3 3.2-.6 4.5-.9 1.4-2.3 2.2-3.9 2.3h-1.6c-.9 0-1.6.7-1.6 1.6 0 .9.7 1.6 1.6 1.6h1.7c2.8-.1 5.4-1.6 6.9-4 1.6-2.4 1.9-5.3.8-8.4z" fill="#ED3325"/></svg>
-                  <span>DoorDash</span>
-                </div>
-                <div class="c-card-brand">CRIMSON</div>
-                <div class="c-card-chip"></div>
-              </div>
-              <div class="c-card-bottom">
-                <div>
-                  <div class="c-card-debit-text">Debit</div>
-                  <div class="c-card-visa">VISA</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Card 3 — front -->
-          <div class="c-card c-card-3">
-            <div class="c-card-inner">
-              <div class="c-card-top">
-                <div class="c-card-dd">
-                  <svg viewBox="0 0 32 32" fill="none"><path d="M27.2 13.4c-1.4-4.1-5.3-7-9.8-7H7.6c-.9 0-1.6.7-1.6 1.6v16c0 .9.7 1.6 1.6 1.6h2.9c.9 0 1.6-.7 1.6-1.6V11.9h5.3c2.5 0 4.7 1.6 5.5 3.9.5 1.5.3 3.2-.6 4.5-.9 1.4-2.3 2.2-3.9 2.3h-1.6c-.9 0-1.6.7-1.6 1.6 0 .9.7 1.6 1.6 1.6h1.7c2.8-.1 5.4-1.6 6.9-4 1.6-2.4 1.9-5.3.8-8.4z" fill="#ED3325"/></svg>
-                  <span>DoorDash</span>
-                </div>
-                <div class="c-card-brand">CRIMSON</div>
-                <div class="c-card-chip"></div>
-              </div>
-              <div class="c-card-bottom">
-                <div>
-                  <div class="c-card-debit-text">Debit</div>
-                  <div class="c-card-visa">VISA</div>
-                </div>
+            <div class="c-card-bottom">
+              <div>
+                <div class="c-card-debit-text">Debit</div>
+                <div class="c-card-visa">VISA</div>
               </div>
             </div>
           </div>
         </div>
-
-        <!-- DoorDash D badge (red bag logo) -->
-        <div class="hero-dd-badge">
-          <svg viewBox="0 0 32 32" fill="none"><path d="M27.2 13.4c-1.4-4.1-5.3-7-9.8-7H7.6c-.9 0-1.6.7-1.6 1.6v16c0 .9.7 1.6 1.6 1.6h2.9c.9 0 1.6-.7 1.6-1.6V11.9h5.3c2.5 0 4.7 1.6 5.5 3.9.5 1.5.3 3.2-.6 4.5-.9 1.4-2.3 2.2-3.9 2.3h-1.6c-.9 0-1.6.7-1.6 1.6 0 .9.7 1.6 1.6 1.6h1.7c2.8-.1 5.4-1.6 6.9-4 1.6-2.4 1.9-5.3.8-8.4z" fill="white"/></svg>
+        <!-- Card 2 — middle -->
+        <div class="c-card c-card-2">
+          <div class="c-card-inner">
+            <div class="c-card-top">
+              <div class="c-card-dd">
+                <svg viewBox="0 0 32 32" fill="none"><path d="M27.2 13.4c-1.4-4.1-5.3-7-9.8-7H7.6c-.9 0-1.6.7-1.6 1.6v16c0 .9.7 1.6 1.6 1.6h2.9c.9 0 1.6-.7 1.6-1.6V11.9h5.3c2.5 0 4.7 1.6 5.5 3.9.5 1.5.3 3.2-.6 4.5-.9 1.4-2.3 2.2-3.9 2.3h-1.6c-.9 0-1.6.7-1.6 1.6 0 .9.7 1.6 1.6 1.6h1.7c2.8-.1 5.4-1.6 6.9-4 1.6-2.4 1.9-5.3.8-8.4z" fill="#ED3325"/></svg>
+                <span>DoorDash</span>
+              </div>
+              <div class="c-card-brand">CRIMSON</div>
+              <div class="c-card-chip"></div>
+            </div>
+            <div class="c-card-bottom">
+              <div>
+                <div class="c-card-debit-text">Debit</div>
+                <div class="c-card-visa">VISA</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Card 3 — front -->
+        <div class="c-card c-card-3">
+          <div class="c-card-inner">
+            <div class="c-card-top">
+              <div class="c-card-dd">
+                <svg viewBox="0 0 32 32" fill="none"><path d="M27.2 13.4c-1.4-4.1-5.3-7-9.8-7H7.6c-.9 0-1.6.7-1.6 1.6v16c0 .9.7 1.6 1.6 1.6h2.9c.9 0 1.6-.7 1.6-1.6V11.9h5.3c2.5 0 4.7 1.6 5.5 3.9.5 1.5.3 3.2-.6 4.5-.9 1.4-2.3 2.2-3.9 2.3h-1.6c-.9 0-1.6.7-1.6 1.6 0 .9.7 1.6 1.6 1.6h1.7c2.8-.1 5.4-1.6 6.9-4 1.6-2.4 1.9-5.3.8-8.4z" fill="#ED3325"/></svg>
+                <span>DoorDash</span>
+              </div>
+              <div class="c-card-brand">CRIMSON</div>
+              <div class="c-card-chip"></div>
+            </div>
+            <div class="c-card-bottom">
+              <div>
+                <div class="c-card-debit-text">Debit</div>
+                <div class="c-card-visa">VISA</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
