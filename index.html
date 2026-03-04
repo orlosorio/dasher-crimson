@@ -12,16 +12,18 @@
 
 :root {
   /* PRD Color Palette */
-  --crimson-primary: #600B0B;
+  --crimson-primary: #6F0F0F;
   --crimson-deep: #4A0808;
-  --doordash-red: #FF3008;
+  --doordash-red: #ED3325;
   --stroke-red: #8B1A1A;
   --white: #FFFFFF;
   --text-dark: #191919;
   --text-body: #494949;
+  --text-secondary: #333333;
   --text-muted: #757575;
   --border-light: #E8E8E8;
   --bg-light: #F7F7F7;
+  --bg-offwhite: #E9E9E9;
   --font: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
@@ -136,50 +138,65 @@ body {
 /* ===== HERO ===== */
 .hero {
   background: var(--crimson-primary);
-  padding: 130px 0 80px;
+  padding: 128px 0 0;
   position: relative;
   overflow: hidden;
 }
 
+/* Subtle background pattern — darker grid lines inspired by the card */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(139,26,26,0.25) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(139,26,26,0.25) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
 .hero-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  align-items: center;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 40px;
+  align-items: end;
+  min-height: 480px;
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
+  padding-bottom: 80px;
   opacity: 0;
   transform: translateY(24px);
   animation: fadeUp 0.7s 0.15s forwards;
 }
 
 .hero h1 {
-  font-size: clamp(44px, 6vw, 72px);
+  font-size: clamp(44px, 5.5vw, 68px);
   font-weight: 700;
-  line-height: 0.95;
+  line-height: 0.92;
   letter-spacing: -0.02em;
   color: var(--white);
   text-transform: uppercase;
   margin-bottom: 24px;
 }
 
-.hero-sub {
-  font-size: clamp(15px, 1.6vw, 17px);
+.hero-body {
+  font-size: clamp(15px, 1.5vw, 17px);
   line-height: 1.65;
   color: rgba(255, 255, 255, 0.75);
   max-width: 420px;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
-.hero-sub-accent {
-  font-size: clamp(15px, 1.6vw, 17px);
+.hero-callout {
+  font-size: clamp(15px, 1.5vw, 17px);
   line-height: 1.65;
   color: rgba(255, 255, 255, 0.9);
   font-style: italic;
-  margin-bottom: 36px;
+  margin-bottom: 32px;
 }
 
 .hero-cta {
@@ -189,18 +206,20 @@ body {
   font-family: var(--font);
   font-size: 15px;
   font-weight: 700;
-  color: var(--text-dark);
-  background: var(--white);
-  border: none;
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
   padding: 14px 32px;
   border-radius: 100px;
   cursor: pointer;
   text-decoration: none;
-  transition: filter 0.2s, transform 0.15s, box-shadow 0.2s;
+  transition: background 0.25s, transform 0.15s, box-shadow 0.25s;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 .hero-cta:hover {
-  filter: brightness(0.97);
+  background: rgba(255, 255, 255, 0.25);
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
@@ -209,204 +228,265 @@ body {
   transform: scale(0.98);
 }
 
-.hero-cta svg {
-  transition: transform 0.2s;
-}
-
-.hero-cta:hover svg {
-  transform: translateX(3px);
-}
-
-/* Hero card visual */
+/* ===== Hero Right Column — Complex Visual Stack ===== */
 .hero-visual {
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
+  min-height: 480px;
   opacity: 0;
   transform: translateY(24px);
   animation: fadeUp 0.7s 0.3s forwards;
 }
 
-/* Crimson Card — matches the actual card design */
-.crimson-card {
-  width: 380px;
-  height: 240px;
-  background: linear-gradient(145deg, #c4271a 0%, #8a1a12 35%, #600B0B 70%, #4A0808 100%);
-  border-radius: 16px;
-  padding: 28px 28px 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: relative;
+/* Background photo area — the Dasher lifestyle photo */
+.hero-photo {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(111,15,15,0.4) 0%, rgba(111,15,15,0.1) 50%, rgba(111,15,15,0.3) 100%);
+  border-radius: 4px 4px 0 0;
   overflow: hidden;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255,255,255,0.05) inset;
 }
 
-/* Concentric curved lines on the card */
-.crimson-card::before {
+/* Simulated lifestyle photo with warm overlay */
+.hero-photo::before {
   content: '';
   position: absolute;
-  top: 30%;
-  left: 35%;
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 60, 30, 0.25);
-  box-shadow:
-    0 0 0 28px transparent,
-    0 0 0 30px rgba(255, 60, 30, 0.2),
-    0 0 0 58px transparent,
-    0 0 0 60px rgba(255, 60, 30, 0.16),
-    0 0 0 88px transparent,
-    0 0 0 90px rgba(255, 60, 30, 0.12),
-    0 0 0 118px transparent,
-    0 0 0 120px rgba(255, 60, 30, 0.08);
-  pointer-events: none;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 60% 40%, rgba(200,150,100,0.15) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(111,15,15,0) 60%, rgba(111,15,15,0.7) 100%);
 }
 
-.card-top {
-  display: flex;
-  align-items: flex-start;
-  gap: 0;
-  flex-direction: column;
-  position: relative;
-  z-index: 1;
+/* Transparent card overlay frame (Layer 3 from PRD) */
+.hero-frame {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 280px;
+  height: 180px;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 14px;
+  padding: 20px;
+  z-index: 3;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  background: rgba(255,255,255,0.03);
 }
 
-.card-dd-row {
+.hero-frame-dd {
   display: flex;
   align-items: center;
   gap: 6px;
   margin-bottom: 2px;
 }
 
-.card-dd-icon {
-  width: 20px;
-  height: 20px;
+.hero-frame-dd svg {
+  width: 18px;
+  height: 18px;
 }
 
-.card-dd-text {
-  font-size: 11px;
+.hero-frame-dd span {
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero-frame-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.03em;
+  line-height: 1.1;
+}
+
+.hero-frame-chip {
+  width: 36px;
+  height: 26px;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  border-radius: 5px;
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-frame-chip::after {
+  content: '';
+  width: 16px;
+  height: 12px;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 2px;
+}
+
+/* Fanned card stack (Layer 2 from PRD) */
+.hero-cards-stack {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 0;
+}
+
+/* Base card mixin */
+.c-card {
+  width: 260px;
+  height: 164px;
+  background: linear-gradient(145deg, #c4271a 0%, #8a1a12 35%, #6F0F0F 70%, #4A0808 100%);
+  border-radius: 14px;
+  position: absolute;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+}
+
+/* Concentric curved lines on each card */
+.c-card::before {
+  content: '';
+  position: absolute;
+  top: 25%;
+  left: 30%;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 60, 30, 0.22);
+  box-shadow:
+    0 0 0 22px transparent,
+    0 0 0 24px rgba(255, 60, 30, 0.18),
+    0 0 0 46px transparent,
+    0 0 0 48px rgba(255, 60, 30, 0.14),
+    0 0 0 70px transparent,
+    0 0 0 72px rgba(255, 60, 30, 0.10);
+  pointer-events: none;
+}
+
+.c-card-inner {
+  padding: 18px 20px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.c-card-top {
+  display: flex;
+  flex-direction: column;
+}
+
+.c-card-dd {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 1px;
+}
+
+.c-card-dd svg {
+  width: 16px;
+  height: 16px;
+}
+
+.c-card-dd span {
+  font-size: 9px;
   font-weight: 700;
   color: var(--doordash-red);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-.card-brand-name {
-  font-size: 26px;
+.c-card-brand {
+  font-size: 18px;
   font-weight: 700;
   color: var(--doordash-red);
   letter-spacing: 0.03em;
   line-height: 1.1;
 }
 
-.card-chip {
-  width: 40px;
-  height: 30px;
+.c-card-chip {
+  width: 32px;
+  height: 24px;
   background: linear-gradient(135deg, #C9A84C, #B8943C, #D4B85C);
-  border-radius: 6px;
-  margin-top: 16px;
-  position: relative;
-  z-index: 1;
+  border-radius: 5px;
+  margin-top: 10px;
 }
 
-.card-chip::before {
-  content: '';
-  position: absolute;
-  top: 4px;
-  left: 4px;
-  right: 4px;
-  bottom: 4px;
-  border: 1px solid rgba(0,0,0,0.12);
-  border-radius: 3px;
-}
-
-.card-chip::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 4px;
-  right: 4px;
-  height: 1px;
-  background: rgba(0,0,0,0.1);
-}
-
-.card-bottom {
+.c-card-bottom {
   display: flex;
-  align-items: flex-end;
   justify-content: flex-end;
-  position: relative;
-  z-index: 1;
+  align-items: flex-end;
 }
 
-.card-debit {
-  text-align: right;
-}
-
-.card-debit-label {
-  font-size: 10px;
-  font-weight: 500;
-  color: rgba(255,255,255,0.6);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-bottom: 2px;
-}
-
-.card-visa {
-  font-size: 28px;
+.c-card-visa {
+  font-size: 20px;
   font-weight: 700;
-  color: rgba(255,255,255,0.9);
+  color: rgba(255,255,255,0.85);
   font-style: italic;
   letter-spacing: 0.02em;
   line-height: 1;
 }
 
-/* Floating pills */
-.hero-pill {
+.c-card-debit-text {
+  font-size: 8px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: right;
+  margin-bottom: 2px;
+}
+
+/* Card 1 — back card, more rotated */
+.c-card-1 {
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-70%) rotate(-12deg);
+  z-index: 1;
+  opacity: 0.85;
+}
+
+/* Card 2 — middle card */
+.c-card-2 {
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-55%) rotate(-4deg);
+  z-index: 2;
+  opacity: 0.95;
+}
+
+/* Card 3 — front card, most visible */
+.c-card-3 {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-40%) rotate(4deg);
+  z-index: 3;
+}
+
+/* DoorDash D logo badge on the red bag area */
+.hero-dd-badge {
   position: absolute;
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 100px;
-  padding: 10px 20px;
-  font-size: 13px;
-  font-weight: 600;
-  color: rgba(255,255,255,0.9);
-  white-space: nowrap;
+  bottom: 36px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  background: var(--doordash-red);
+  border-radius: 50%;
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  z-index: 5;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
 }
 
-.hero-pill-check {
-  color: #4ADE80;
-  font-size: 14px;
-}
-
-.hero-pill-1 {
-  top: -16px;
-  right: -16px;
-  animation: float 5s ease-in-out infinite;
-}
-
-.hero-pill-2 {
-  bottom: 0;
-  left: -32px;
-  animation: float 5s ease-in-out 1.2s infinite;
-}
-
-.hero-pill-3 {
-  bottom: 56px;
-  right: -40px;
-  animation: float 5s ease-in-out 2.4s infinite;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+.hero-dd-badge svg {
+  width: 32px;
+  height: 32px;
 }
 
 @keyframes fadeUp {
@@ -416,7 +496,7 @@ body {
 /* ===== THREE WAYS ===== */
 .highlights {
   padding: 72px 0;
-  background: var(--white);
+  background: var(--bg-offwhite);
   border-bottom: 1px solid var(--border-light);
 }
 
@@ -464,14 +544,14 @@ body {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  color: var(--text-dark);
+  color: var(--text-secondary);
   margin-bottom: 8px;
 }
 
 .hl-item p {
   font-size: 14px;
   line-height: 1.55;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   max-width: 260px;
   margin: 0 auto;
 }
@@ -866,14 +946,32 @@ body {
 @media (max-width: 900px) {
   .hero-grid {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 0;
+    min-height: auto;
   }
 
-  .hero-visual { justify-content: flex-start; }
-  .crimson-card { width: 300px; height: 190px; padding: 22px; }
-  .card-brand-name { font-size: 20px; }
-  .card-visa { font-size: 22px; }
-  .hero-pill { display: none; }
+  .hero-content { padding-bottom: 40px; }
+
+  .hero-visual {
+    min-height: 360px;
+    justify-content: center;
+  }
+
+  .c-card { width: 200px; height: 126px; }
+  .c-card-brand { font-size: 14px; }
+  .c-card-visa { font-size: 16px; }
+  .c-card-chip { width: 26px; height: 18px; margin-top: 6px; }
+  .c-card-dd span { font-size: 7px; }
+  .c-card-dd svg { width: 12px; height: 12px; }
+  .c-card-inner { padding: 12px 14px; }
+  .c-card-1 { transform: translateX(-65%) rotate(-12deg); }
+  .c-card-2 { transform: translateX(-50%) rotate(-4deg); }
+  .c-card-3 { transform: translateX(-35%) rotate(4deg); }
+
+  .hero-frame { width: 200px; height: 130px; padding: 14px; top: 12px; right: 12px; }
+  .hero-frame-name { font-size: 16px; }
+  .hero-dd-badge { width: 44px; height: 44px; bottom: 24px; right: 12px; }
+  .hero-dd-badge svg { width: 24px; height: 24px; }
 
   .highlights-grid {
     grid-template-columns: 1fr;
@@ -910,7 +1008,8 @@ body {
 
 @media (max-width: 600px) {
   .container { padding: 0 20px; }
-  .hero { padding: 100px 0 56px; }
+  .hero { padding: 100px 0 0; }
+  .hero-frame { display: none; }
 
   .perks-grid { grid-template-columns: 1fr; }
 
@@ -960,39 +1059,94 @@ body {
 <section class="hero" id="hero">
   <div class="container">
     <div class="hero-grid">
+      <!-- Left Column: Content Stack -->
       <div class="hero-content">
-        <h1>Your money.<br>Unlocked.</h1>
-        <p class="hero-sub">You just opened more than a payout method. You opened a bank account. Here's how to make it work for you in the next 14 days.</p>
-        <p class="hero-sub-accent">It's the account that works for you.</p>
-        <a href="#steps" class="hero-cta">
-          Let's go
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </a>
+        <h1>Cash after<br>every dash</h1>
+        <p class="hero-body">No more awaiting all week or paying extra fees — get paid instantly (1) after every dash, earn cash back (2) on your purchases, and manage your money securely and easily all within the Dasher app.</p>
+        <p class="hero-callout">It's the account that works for you.</p>
+        <a href="#steps" class="hero-cta">Apply now</a>
       </div>
+
+      <!-- Right Column: Complex Visual Stack -->
       <div class="hero-visual">
-        <!-- Crimson Card -->
-        <div class="crimson-card">
-          <div class="card-top">
-            <div class="card-dd-row">
-              <svg class="card-dd-icon" viewBox="0 0 32 32" fill="none">
-                <path d="M27.2 13.4c-1.4-4.1-5.3-7-9.8-7H7.6c-.9 0-1.6.7-1.6 1.6v16c0 .9.7 1.6 1.6 1.6h2.9c.9 0 1.6-.7 1.6-1.6V11.9h5.3c2.5 0 4.7 1.6 5.5 3.9.5 1.5.3 3.2-.6 4.5-.9 1.4-2.3 2.2-3.9 2.3h-1.6c-.9 0-1.6.7-1.6 1.6 0 .9.7 1.6 1.6 1.6h1.7c2.8-.1 5.4-1.6 6.9-4 1.6-2.4 1.9-5.3.8-8.4z" fill="#FF3008"/>
-              </svg>
-              <span class="card-dd-text">DoorDash</span>
-            </div>
-            <div class="card-brand-name">CRIMSON</div>
-            <div class="card-chip"></div>
+        <!-- Layer 1: Background photo area -->
+        <div class="hero-photo"></div>
+
+        <!-- Layer 3: Transparent card overlay frame -->
+        <div class="hero-frame">
+          <div class="hero-frame-dd">
+            <svg viewBox="0 0 32 32" fill="none"><path d="M27.2 13.4c-1.4-4.1-5.3-7-9.8-7H7.6c-.9 0-1.6.7-1.6 1.6v16c0 .9.7 1.6 1.6 1.6h2.9c.9 0 1.6-.7 1.6-1.6V11.9h5.3c2.5 0 4.7 1.6 5.5 3.9.5 1.5.3 3.2-.6 4.5-.9 1.4-2.3 2.2-3.9 2.3h-1.6c-.9 0-1.6.7-1.6 1.6 0 .9.7 1.6 1.6 1.6h1.7c2.8-.1 5.4-1.6 6.9-4 1.6-2.4 1.9-5.3.8-8.4z" fill="rgba(255,255,255,0.7)"/></svg>
+            <span>DoorDash</span>
           </div>
-          <div class="card-bottom">
-            <div class="card-debit">
-              <div class="card-debit-label">Debit</div>
-              <div class="card-visa">VISA</div>
+          <div class="hero-frame-name">CRIMSON</div>
+          <div class="hero-frame-chip"></div>
+        </div>
+
+        <!-- Layer 2: Fanned card stack -->
+        <div class="hero-cards-stack">
+          <!-- Card 1 — back -->
+          <div class="c-card c-card-1">
+            <div class="c-card-inner">
+              <div class="c-card-top">
+                <div class="c-card-dd">
+                  <svg viewBox="0 0 32 32" fill="none"><path d="M27.2 13.4c-1.4-4.1-5.3-7-9.8-7H7.6c-.9 0-1.6.7-1.6 1.6v16c0 .9.7 1.6 1.6 1.6h2.9c.9 0 1.6-.7 1.6-1.6V11.9h5.3c2.5 0 4.7 1.6 5.5 3.9.5 1.5.3 3.2-.6 4.5-.9 1.4-2.3 2.2-3.9 2.3h-1.6c-.9 0-1.6.7-1.6 1.6 0 .9.7 1.6 1.6 1.6h1.7c2.8-.1 5.4-1.6 6.9-4 1.6-2.4 1.9-5.3.8-8.4z" fill="#ED3325"/></svg>
+                  <span>DoorDash</span>
+                </div>
+                <div class="c-card-brand">CRIMSON</div>
+                <div class="c-card-chip"></div>
+              </div>
+              <div class="c-card-bottom">
+                <div>
+                  <div class="c-card-debit-text">Debit</div>
+                  <div class="c-card-visa">VISA</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Card 2 — middle -->
+          <div class="c-card c-card-2">
+            <div class="c-card-inner">
+              <div class="c-card-top">
+                <div class="c-card-dd">
+                  <svg viewBox="0 0 32 32" fill="none"><path d="M27.2 13.4c-1.4-4.1-5.3-7-9.8-7H7.6c-.9 0-1.6.7-1.6 1.6v16c0 .9.7 1.6 1.6 1.6h2.9c.9 0 1.6-.7 1.6-1.6V11.9h5.3c2.5 0 4.7 1.6 5.5 3.9.5 1.5.3 3.2-.6 4.5-.9 1.4-2.3 2.2-3.9 2.3h-1.6c-.9 0-1.6.7-1.6 1.6 0 .9.7 1.6 1.6 1.6h1.7c2.8-.1 5.4-1.6 6.9-4 1.6-2.4 1.9-5.3.8-8.4z" fill="#ED3325"/></svg>
+                  <span>DoorDash</span>
+                </div>
+                <div class="c-card-brand">CRIMSON</div>
+                <div class="c-card-chip"></div>
+              </div>
+              <div class="c-card-bottom">
+                <div>
+                  <div class="c-card-debit-text">Debit</div>
+                  <div class="c-card-visa">VISA</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Card 3 — front -->
+          <div class="c-card c-card-3">
+            <div class="c-card-inner">
+              <div class="c-card-top">
+                <div class="c-card-dd">
+                  <svg viewBox="0 0 32 32" fill="none"><path d="M27.2 13.4c-1.4-4.1-5.3-7-9.8-7H7.6c-.9 0-1.6.7-1.6 1.6v16c0 .9.7 1.6 1.6 1.6h2.9c.9 0 1.6-.7 1.6-1.6V11.9h5.3c2.5 0 4.7 1.6 5.5 3.9.5 1.5.3 3.2-.6 4.5-.9 1.4-2.3 2.2-3.9 2.3h-1.6c-.9 0-1.6.7-1.6 1.6 0 .9.7 1.6 1.6 1.6h1.7c2.8-.1 5.4-1.6 6.9-4 1.6-2.4 1.9-5.3.8-8.4z" fill="#ED3325"/></svg>
+                  <span>DoorDash</span>
+                </div>
+                <div class="c-card-brand">CRIMSON</div>
+                <div class="c-card-chip"></div>
+              </div>
+              <div class="c-card-bottom">
+                <div>
+                  <div class="c-card-debit-text">Debit</div>
+                  <div class="c-card-visa">VISA</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <!-- Floating pills -->
-        <div class="hero-pill hero-pill-1"><span class="hero-pill-check">✓</span> Instant pay</div>
-        <div class="hero-pill hero-pill-2"><span class="hero-pill-check">✓</span> Cash back on gas</div>
-        <div class="hero-pill hero-pill-3"><span class="hero-pill-check">✓</span> FDIC insured</div>
+
+        <!-- DoorDash D badge (red bag logo) -->
+        <div class="hero-dd-badge">
+          <svg viewBox="0 0 32 32" fill="none"><path d="M27.2 13.4c-1.4-4.1-5.3-7-9.8-7H7.6c-.9 0-1.6.7-1.6 1.6v16c0 .9.7 1.6 1.6 1.6h2.9c.9 0 1.6-.7 1.6-1.6V11.9h5.3c2.5 0 4.7 1.6 5.5 3.9.5 1.5.3 3.2-.6 4.5-.9 1.4-2.3 2.2-3.9 2.3h-1.6c-.9 0-1.6.7-1.6 1.6 0 .9.7 1.6 1.6 1.6h1.7c2.8-.1 5.4-1.6 6.9-4 1.6-2.4 1.9-5.3.8-8.4z" fill="white"/></svg>
+        </div>
       </div>
     </div>
   </div>
