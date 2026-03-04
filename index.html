@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DoorDash Crimson — Your Money, Unlocked</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  /* PRD Color Palette */
+  --crimson-primary: #600B0B;
+  --crimson-deep: #4A0808;
+  --doordash-red: #FF3008;
+  --stroke-red: #8B1A1A;
+  --white: #FFFFFF;
+  --text-dark: #191919;
+  --text-body: #494949;
+  --text-muted: #757575;
+  --border-light: #E8E8E8;
+  --bg-light: #F7F7F7;
+  --font: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--white);
+  color: var(--text-dark);
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ===== NAV ===== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: var(--white);
+  border-bottom: 1px solid var(--border-light);
+  transition: box-shadow 0.3s;
+}
+
+.nav.scrolled {
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+/* DoorDash D logo */
+.nav-logo-d {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.nav-logo-text {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--doordash-red);
+}
+
+.nav-center {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.nav-center a {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-dark);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-center a:hover {
+  color: var(--doordash-red);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-signup {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--white);
+  background: var(--doordash-red);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 100px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: filter 0.2s, transform 0.15s;
+}
+
+.nav-signup:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.nav-signup:active {
+  transform: scale(0.98);
+}
+
+/* ===== HERO ===== */
+.hero {
+  background: var(--crimson-primary);
+  padding: 130px 0 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(24px);
+  animation: fadeUp 0.7s 0.15s forwards;
+}
+
+.hero h1 {
+  font-size: clamp(44px, 6vw, 72px);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.hero-sub {
+  font-size: clamp(15px, 1.6vw, 17px);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.75);
+  max-width: 420px;
+  margin-bottom: 12px;
+}
+
+.hero-sub-accent {
+  font-size: clamp(15px, 1.6vw, 17px);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.9);
+  font-style: italic;
+  margin-bottom: 36px;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-dark);
+  background: var(--white);
+  border: none;
+  padding: 14px 32px;
+  border-radius: 100px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: filter 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+
+.hero-cta:hover {
+  filter: brightness(0.97);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.hero-cta:active {
+  transform: scale(0.98);
+}
+
+.hero-cta svg {
+  transition: transform 0.2s;
+}
+
+.hero-cta:hover svg {
+  transform: translateX(3px);
+}
+
+/* Hero card visual */
+.hero-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(24px);
+  animation: fadeUp 0.7s 0.3s forwards;
+}
+
+/* Crimson Card — matches the actual card design */
+.crimson-card {
+  width: 380px;
+  height: 240px;
+  background: linear-gradient(145deg, #c4271a 0%, #8a1a12 35%, #600B0B 70%, #4A0808 100%);
+  border-radius: 16px;
+  padding: 28px 28px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255,255,255,0.05) inset;
+}
+
+/* Concentric curved lines on the card */
+.crimson-card::before {
+  content: '';
+  position: absolute;
+  top: 30%;
+  left: 35%;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 60, 30, 0.25);
+  box-shadow:
+    0 0 0 28px transparent,
+    0 0 0 30px rgba(255, 60, 30, 0.2),
+    0 0 0 58px transparent,
+    0 0 0 60px rgba(255, 60, 30, 0.16),
+    0 0 0 88px transparent,
+    0 0 0 90px rgba(255, 60, 30, 0.12),
+    0 0 0 118px transparent,
+    0 0 0 120px rgba(255, 60, 30, 0.08);
+  pointer-events: none;
+}
+
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+
+.card-dd-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+
+.card-dd-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.card-dd-text {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--doordash-red);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.card-brand-name {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--doordash-red);
+  letter-spacing: 0.03em;
+  line-height: 1.1;
+}
+
+.card-chip {
+  width: 40px;
+  height: 30px;
+  background: linear-gradient(135deg, #C9A84C, #B8943C, #D4B85C);
+  border-radius: 6px;
+  margin-top: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.card-chip::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 3px;
+}
+
+.card-chip::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 4px;
+  right: 4px;
+  height: 1px;
+  background: rgba(0,0,0,0.1);
+}
+
+.card-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  position: relative;
+  z-index: 1;
+}
+
+.card-debit {
+  text-align: right;
+}
+
+.card-debit-label {
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.card-visa {
+  font-size: 28px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.9);
+  font-style: italic;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+/* Floating pills */
+.hero-pill {
+  position: absolute;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 100px;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hero-pill-check {
+  color: #4ADE80;
+  font-size: 14px;
+}
+
+.hero-pill-1 {
+  top: -16px;
+  right: -16px;
+  animation: float 5s ease-in-out infinite;
+}
+
+.hero-pill-2 {
+  bottom: 0;
+  left: -32px;
+  animation: float 5s ease-in-out 1.2s infinite;
+}
+
+.hero-pill-3 {
+  bottom: 56px;
+  right: -40px;
+  animation: float 5s ease-in-out 2.4s infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== THREE WAYS ===== */
+.highlights {
+  padding: 72px 0;
+  background: var(--white);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.highlights-title {
+  text-align: center;
+  font-size: clamp(24px, 3.5vw, 36px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  color: var(--text-dark);
+  margin-bottom: 48px;
+}
+
+.highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.hl-item {
+  text-align: center;
+  padding: 16px 32px;
+  border-right: 1px solid var(--border-light);
+}
+
+.hl-item:last-child {
+  border-right: none;
+}
+
+.hl-num {
+  width: 44px;
+  height: 44px;
+  margin: 0 auto 14px;
+  background: var(--doordash-red);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.hl-item h3 {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.hl-item p {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  max-width: 260px;
+  margin: 0 auto;
+}
+
+/* ===== STEPS ===== */
+.steps {
+  padding: 96px 0 64px;
+  background: var(--bg-light);
+}
+
+.steps-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.steps-label {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--doordash-red);
+  margin-bottom: 12px;
+}
+
+.steps-title {
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  color: var(--text-dark);
+  line-height: 1.05;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+  padding: 48px 0;
+  border-top: 1px solid var(--border-light);
+  opacity: 0;
+  transform: translateY(24px);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.step.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.step:nth-child(even) .step-info { order: 2; }
+.step:nth-child(even) .step-detail { order: 1; }
+
+.step-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.step-num-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.step-circle {
+  width: 48px;
+  height: 48px;
+  background: var(--doordash-red);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--white);
+  flex-shrink: 0;
+}
+
+.step-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.step-hook {
+  font-size: clamp(24px, 2.8vw, 32px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  color: var(--text-dark);
+  margin-bottom: 14px;
+}
+
+.step-body {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-body);
+}
+
+.step-detail {
+  background: var(--white);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  padding: 28px;
+}
+
+.step-detail-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.step-path {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+  margin-bottom: 24px;
+  padding: 12px 16px;
+  background: var(--bg-light);
+  border-radius: 10px;
+}
+
+.step-path-item {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-body);
+  white-space: nowrap;
+}
+
+.step-path-sep {
+  color: var(--doordash-red);
+  margin: 0 8px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.step-value {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--text-body);
+  padding-left: 14px;
+  border-left: 3px solid var(--doordash-red);
+}
+
+/* ===== PERKS ===== */
+.perks {
+  background: var(--crimson-primary);
+  padding: 96px 0;
+}
+
+.perks-title {
+  text-align: center;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  color: var(--white);
+  margin-bottom: 52px;
+}
+
+.perks-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.perk {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--stroke-red);
+  border-radius: 16px;
+  padding: 28px 20px;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.perk.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.perk:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-3px);
+}
+
+.perk-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 16px;
+  background: rgba(255, 48, 8, 0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.perk-icon svg {
+  width: 24px;
+  height: 24px;
+  color: #FF8A70;
+}
+
+.perk h3 {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--white);
+}
+
+.perk p {
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ===== FAQ ===== */
+.faq {
+  background: var(--white);
+  padding: 96px 0;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 72px;
+  align-items: start;
+}
+
+.faq-left h2 {
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  color: var(--text-dark);
+  margin-bottom: 10px;
+}
+
+.faq-left p {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--border-light);
+}
+
+.faq-item:first-child {
+  border-top: 1px solid var(--border-light);
+}
+
+.faq-q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  gap: 16px;
+}
+
+.faq-q span {
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.faq-toggle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--bg-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.3s;
+}
+
+.faq-item.open .faq-toggle {
+  background: var(--doordash-red);
+  transform: rotate(45deg);
+}
+
+.faq-toggle svg {
+  width: 12px;
+  height: 12px;
+  color: var(--text-muted);
+  transition: color 0.3s;
+}
+
+.faq-item.open .faq-toggle svg {
+  color: var(--white);
+}
+
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-a-inner {
+  padding: 0 0 20px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-muted);
+  max-width: 500px;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  background: var(--crimson-deep);
+  padding: 48px 0 32px;
+}
+
+.footer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-logo svg {
+  width: 24px;
+  height: 24px;
+}
+
+.footer-logo span {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.5);
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+}
+
+.footer-links a {
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: rgba(255,255,255,0.6);
+}
+
+.footer-legal {
+  font-size: 11px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.3);
+  max-width: 720px;
+}
+
+.footer-bottom {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: rgba(255,255,255,0.25);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .hero-visual { justify-content: flex-start; }
+  .crimson-card { width: 300px; height: 190px; padding: 22px; }
+  .card-brand-name { font-size: 20px; }
+  .card-visa { font-size: 22px; }
+  .hero-pill { display: none; }
+
+  .highlights-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hl-item {
+    border-right: none;
+    border-bottom: 1px solid var(--border-light);
+    padding: 24px 0;
+  }
+
+  .hl-item:last-child { border-bottom: none; }
+
+  .step {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 36px 0;
+  }
+
+  .step:nth-child(even) .step-info,
+  .step:nth-child(even) .step-detail { order: unset; }
+
+  .perks-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .faq-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .nav-center { display: none; }
+}
+
+@media (max-width: 600px) {
+  .container { padding: 0 20px; }
+  .hero { padding: 100px 0 56px; }
+
+  .perks-grid { grid-template-columns: 1fr; }
+
+  .step-path { flex-wrap: wrap; gap: 2px 0; }
+
+  .footer-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .footer-links { flex-wrap: wrap; gap: 10px; }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV — DoorDash "for Dashers" style -->
+<nav class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo">
+      <!-- DoorDash D icon -->
+      <svg class="nav-logo-d" viewBox="0 0 32 32" fill="none">
+        <path d="M27.2 13.4c-1.4-4.1-5.3-7-9.8-7H7.6c-.9 0-1.6.7-1.6 1.6v16c0 .9.7 1.6 1.6 1.6h2.9c.9 0 1.6-.7 1.6-1.6V11.9h5.3c2.5 0 4.7 1.6 5.5 3.9.5 1.5.3 3.2-.6 4.5-.9 1.4-2.3 2.2-3.9 2.3h-1.6c-.9 0-1.6.7-1.6 1.6 0 .9.7 1.6 1.6 1.6h1.7c2.8-.1 5.4-1.6 6.9-4 1.6-2.4 1.9-5.3.8-8.4z" fill="#FF3008"/>
+      </svg>
+      <span class="nav-logo-text">for Dashers</span>
+    </a>
+    <div class="nav-center">
+      <a href="#steps">Earn</a>
+      <a href="#perks">Dash</a>
+      <a href="#faq">Discover</a>
+      <a href="#">Support</a>
+    </div>
+    <div class="nav-right">
+      <a href="#steps" class="nav-signup">Sign Up</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <h1>Your money.<br>Unlocked.</h1>
+        <p class="hero-sub">You just opened more than a payout method. You opened a bank account. Here's how to make it work for you in the next 14 days.</p>
+        <p class="hero-sub-accent">It's the account that works for you.</p>
+        <a href="#steps" class="hero-cta">
+          Let's go
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="hero-visual">
+        <!-- Crimson Card -->
+        <div class="crimson-card">
+          <div class="card-top">
+            <div class="card-dd-row">
+              <svg class="card-dd-icon" viewBox="0 0 32 32" fill="none">
+                <path d="M27.2 13.4c-1.4-4.1-5.3-7-9.8-7H7.6c-.9 0-1.6.7-1.6 1.6v16c0 .9.7 1.6 1.6 1.6h2.9c.9 0 1.6-.7 1.6-1.6V11.9h5.3c2.5 0 4.7 1.6 5.5 3.9.5 1.5.3 3.2-.6 4.5-.9 1.4-2.3 2.2-3.9 2.3h-1.6c-.9 0-1.6.7-1.6 1.6 0 .9.7 1.6 1.6 1.6h1.7c2.8-.1 5.4-1.6 6.9-4 1.6-2.4 1.9-5.3.8-8.4z" fill="#FF3008"/>
+              </svg>
+              <span class="card-dd-text">DoorDash</span>
+            </div>
+            <div class="card-brand-name">CRIMSON</div>
+            <div class="card-chip"></div>
+          </div>
+          <div class="card-bottom">
+            <div class="card-debit">
+              <div class="card-debit-label">Debit</div>
+              <div class="card-visa">VISA</div>
+            </div>
+          </div>
+        </div>
+        <!-- Floating pills -->
+        <div class="hero-pill hero-pill-1"><span class="hero-pill-check">✓</span> Instant pay</div>
+        <div class="hero-pill hero-pill-2"><span class="hero-pill-check">✓</span> Cash back on gas</div>
+        <div class="hero-pill hero-pill-3"><span class="hero-pill-check">✓</span> FDIC insured</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THREE WAYS -->
+<section class="highlights">
+  <div class="container">
+    <h2 class="highlights-title">Three ways DoorDash Crimson pays</h2>
+    <div class="highlights-grid">
+      <div class="hl-item">
+        <div class="hl-num">1</div>
+        <h3>Instant Pay</h3>
+        <p>Get paid right after every dash, automatically with no deposit fees.</p>
+      </div>
+      <div class="hl-item">
+        <div class="hl-num">2</div>
+        <h3>Cash Back Rewards</h3>
+        <p>Get cash back on gas when you pay at the pump.</p>
+      </div>
+      <div class="hl-item">
+        <div class="hl-num">3</div>
+        <h3>Access to Earnings</h3>
+        <p>Manage your money easily, and securely, directly in the Dasher app.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section class="steps" id="steps">
+  <div class="container">
+    <div class="steps-header">
+      <div class="steps-label">Your 4-step setup</div>
+      <h2 class="steps-title">Set it up now.<br>Thank yourself later.</h2>
+    </div>
+
+    <div class="step">
+      <div class="step-info">
+        <div class="step-num-row">
+          <div class="step-circle">1</div>
+          <div class="step-label">Step one</div>
+        </div>
+        <h3 class="step-hook">Start spending today. Not next week.</h3>
+        <p class="step-body">Your physical card is on its way, but you don't have to wait. Add your virtual Crimson Visa Debit Card to Apple Wallet, Google Wallet, or Samsung Wallet right now and start tapping to pay immediately.</p>
+      </div>
+      <div class="step-detail">
+        <div class="step-detail-label">How to do it</div>
+        <div class="step-path">
+          <span class="step-path-item">Dasher App</span>
+          <span class="step-path-sep">›</span>
+          <span class="step-path-item">Earnings</span>
+          <span class="step-path-sep">›</span>
+          <span class="step-path-item">DoorDash Crimson</span>
+          <span class="step-path-sep">›</span>
+          <span class="step-path-item">View card details</span>
+          <span class="step-path-sep">›</span>
+          <span class="step-path-item">Add to Wallet</span>
+        </div>
+        <div class="step-detail-label">Why it matters</div>
+        <p class="step-value">Every tap-to-pay purchase with your Crimson Card earns you cash back on gas at the pump and EV charging. Your first fill-up could be your first reward.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-info">
+        <div class="step-num-row">
+          <div class="step-circle">2</div>
+          <div class="step-label">Step two</div>
+        </div>
+        <h3 class="step-hook">This isn't a prepaid card. This is a real bank account.</h3>
+        <p class="step-body">Go to your Crimson Hub and look at your Account Details. You'll see a real account number and routing number. That means direct deposits, bill payments, transfers in and out. All yours.</p>
+      </div>
+      <div class="step-detail">
+        <div class="step-detail-label">How to do it</div>
+        <div class="step-path">
+          <span class="step-path-item">Dasher App</span>
+          <span class="step-path-sep">›</span>
+          <span class="step-path-item">Earnings</span>
+          <span class="step-path-sep">›</span>
+          <span class="step-path-item">DoorDash Crimson</span>
+          <span class="step-path-sep">›</span>
+          <span class="step-path-item">Crimson Hub</span>
+          <span class="step-path-sep">›</span>
+          <span class="step-path-item">Account Details</span>
+        </div>
+        <div class="step-detail-label">Why it matters</div>
+        <p class="step-value">Your routing number is 075972202. That's Starion Bank, Member FDIC. Your money is federally insured, just like any major bank.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-info">
+        <div class="step-num-row">
+          <div class="step-circle">3</div>
+          <div class="step-label">Step three</div>
+        </div>
+        <h3 class="step-hook">Move money in. Move money out. No drama.</h3>
+        <p class="step-body">Connect an external bank account so you can transfer funds whenever you need to. No overdraft fees. No minimum balance. No surprises.</p>
+      </div>
+      <div class="step-detail">
+        <div class="step-detail-label">How to do it</div>
+        <div class="step-path">
+          <span class="step-path-item">Crimson Hub</span>
+          <span class="step-path-sep">›</span>
+          <span class="step-path-item">Link an external account</span>
+        </div>
+        <div class="step-detail-label">Why it matters</div>
+        <p class="step-value">Instant transfers when you need them ($1.99). Free standard transfers in 3–5 business days. Plus fee-free withdrawals at 40,000+ MoneyPass ATMs.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-info">
+        <div class="step-num-row">
+          <div class="step-circle">4</div>
+          <div class="step-label">Step four</div>
+        </div>
+        <h3 class="step-hook">All your money. One place. Up to 2 days early.</h3>
+        <p class="step-body">Use your Crimson account and routing number to direct deposit from your other gigs, your 9-to-5, or anywhere else you earn. Over 70% of Dashers juggle multiple income streams. Now you can manage them all from one account.</p>
+      </div>
+      <div class="step-detail">
+        <div class="step-detail-label">How to do it</div>
+        <div class="step-path">
+          <span class="step-path-item">Crimson Hub</span>
+          <span class="step-path-sep">›</span>
+          <span class="step-path-item">Copy account + routing number</span>
+          <span class="step-path-sep">›</span>
+          <span class="step-path-item">Enter at payroll portal</span>
+        </div>
+        <div class="step-detail-label">Why it matters</div>
+        <p class="step-value">With Early Payday, you could access your paychecks up to 2 days before everyone else.*</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERKS -->
+<section class="perks" id="perks">
+  <div class="container">
+    <h2 class="perks-title">Earn while you dash</h2>
+    <div class="perks-grid">
+      <div class="perk">
+        <div class="perk-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/></svg>
+        </div>
+        <h3>Cash back on gas</h3>
+        <p>Every fill-up at the pump earns you money back automatically.</p>
+      </div>
+      <div class="perk">
+        <div class="perk-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <h3>2% back on EV charging</h3>
+        <p>Drive electric? Get rewarded every time you plug in.</p>
+      </div>
+      <div class="perk">
+        <div class="perk-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h3>Shell gallon discounts</h3>
+        <p>Exclusive per-gallon savings at Shell stations nationwide.</p>
+      </div>
+      <div class="perk">
+        <div class="perk-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <h3>Auto maintenance savings</h3>
+        <p>Discounts on oil changes and service at Jiffy Lube &amp; Valvoline.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="faq-grid">
+      <div class="faq-left">
+        <h2>Wait, I thought Crimson was...</h2>
+        <p>Fair. Here are the three questions we get asked the most.</p>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            <span>Isn't Crimson just the Red Card?</span>
+            <div class="faq-toggle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+            </div>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">No. The Red Card is a prepaid card you use to pay for Shop & Deliver orders. Crimson is your personal bank account with a Visa debit card, instant earnings, and cash back.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            <span>What happened to DasherDirect?</span>
+            <div class="faq-toggle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+            </div>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">DasherDirect was the old program. Crimson replaced it with better features, real banking, and more perks. DasherDirect was sunset in April 2025.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            <span>Can I still use Fast Pay?</span>
+            <div class="faq-toggle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+            </div>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">Once you activate Crimson, you won't need to. Your earnings hit your account instantly after every dash, with zero fees. No more paying $1.99 to access your own money.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-logo">
+        <svg viewBox="0 0 32 32" fill="none">
+          <path d="M27.2 13.4c-1.4-4.1-5.3-7-9.8-7H7.6c-.9 0-1.6.7-1.6 1.6v16c0 .9.7 1.6 1.6 1.6h2.9c.9 0 1.6-.7 1.6-1.6V11.9h5.3c2.5 0 4.7 1.6 5.5 3.9.5 1.5.3 3.2-.6 4.5-.9 1.4-2.3 2.2-3.9 2.3h-1.6c-.9 0-1.6.7-1.6 1.6 0 .9.7 1.6 1.6 1.6h1.7c2.8-.1 5.4-1.6 6.9-4 1.6-2.4 1.9-5.3.8-8.4z" fill="#FF3008"/>
+        </svg>
+        <span>Crimson by DoorDash</span>
+      </div>
+      <div class="footer-links">
+        <a href="#">Dasher Central</a>
+        <a href="#">Support</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
+    <div class="footer-legal">
+      *Early Payday: Access to direct deposit funds up to 2 days early is not guaranteed and depends on when the payer submits the deposit. DoorDash Crimson Deposit Account is established by Starion Bank, Member FDIC. The DoorDash Crimson Visa Debit Card is issued by Starion Bank pursuant to a license from Visa U.S.A. Inc.
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 DoorDash. All rights reserved.</span>
+      <span>Member FDIC</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Nav scroll
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// Scroll reveal
+const observe = (sel, stagger) => {
+  const els = document.querySelectorAll(sel);
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        if (stagger) {
+          const i = Array.from(els).indexOf(e.target);
+          setTimeout(() => e.target.classList.add('visible'), i * 100);
+        } else {
+          e.target.classList.add('visible');
+        }
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  els.forEach(el => io.observe(el));
+};
+
+observe('.step', false);
+observe('.perk', true);
+
+// FAQ
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const ans = item.querySelector('.faq-a');
+    const open = item.classList.contains('open');
+
+    document.querySelectorAll('.faq-item').forEach(fi => {
+      fi.classList.remove('open');
+      fi.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+      fi.querySelector('.faq-a').style.maxHeight = '0';
+    });
+
+    if (!open) {
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+      ans.style.maxHeight = ans.scrollHeight + 'px';
+    }
+  });
+});
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+
+</body>
+</html>
